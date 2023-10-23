@@ -1,6 +1,6 @@
 const jToken = require("jsonwebtoken");
 
-const cartValJwt = (req, res, next) => {
+const jwtToken = (req, res, next) => {
     try {
         const token = req.headers.authorization;
         if (!token) {
@@ -20,7 +20,7 @@ const cartValJwt = (req, res, next) => {
 }
 
 module.exports = {
-    cartValJwt
+    jwtToken
 }
 
 

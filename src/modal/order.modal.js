@@ -2,11 +2,11 @@ const mongoose=require("mongoose");
 
 const orderSchema =new mongoose.Schema({
     user_Id:{
-        type:String,
+        type:mongoose.Types.ObjectId,
         required:true
     },
     cart_Id:{
-        type:String,
+        type:mongoose.Types.ObjectId,
         required:true
     },
     status:{
