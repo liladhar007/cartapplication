@@ -11,8 +11,6 @@ app.use(route.categoryRoute);
 app.use(route.cartRoute);
 app.use(route.orderRoute);
 
-
-
 const db = require("./config/database");
 
 const PORT = 3000;
