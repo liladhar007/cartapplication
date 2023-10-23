@@ -42,7 +42,7 @@ const deleteFromCart = async (req, res) => {
     try {
         const { _id } = req.params;
 
-        console.log(`${_id}`)
+        //console.log(`${_id}`)
         
         const result = await cartModal.findOne({ _id });
         if (result) {
