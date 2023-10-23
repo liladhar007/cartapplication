@@ -95,9 +95,9 @@ const postFindLogin = async (req, res) => {
             })
         }
     } catch (err) {
-        log.error(`Error in decoding token:${err}`);
+        log.error(`your data creating err:${err}`);
         res.send({
-            msg: "Error in decoding token",
+            msg: "Error in data creating ",
             status: "failed",
             code: 401
         })
