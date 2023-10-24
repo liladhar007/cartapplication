@@ -4,33 +4,56 @@ const success = require("../util/constant");
 const logger = require("../util/logging");
 const log = logger(new Date() + "cartModal.js");
 
-const cartCreate = async (req, res) => {
+const cartUpData = async (req, res) => {
     try {
         const { userId, productId, quantity, price } = req.body;
-        const result = await cartModal.create({
+        const result = await cartModal.findOne({
             userId: req.user.id,
-            productId,
-            quantity,
-            price
+            productId
         });
+       // console.log(result);
         if (result) {
-            res.send({
-                status: "success",
-                code: 200,
-                data: result
-            })
+            result.quantity = result.quantity + 1;
+            const upDateResult = await cartModal.updateOne({ _id: result._id }, { quantity:result.quantity });
+            if (upDateResult) {
+                res.send({
+                    msg: "success",
+                    code: 200,
+                    Data: upDateResult
+                });
+            } else {
+                res.send({
+                    msg: "upDateResult create error",
+                    code: 400,
+                    status: "failed"
+                })
+            }
         } else {
-            res.send({
-                msg: "Error in creating create",
-                status: "failed",
-                code: 400,
-            })
+            const result = await cartModal.create({
+                userId: req.user.id,
+                productId,
+                quantity,
+                price
+            });
+            if (result) {
+                res.send({
+                    msg: "success",
+                    code: 200,
+                    Data: result
+                })
+            } else {
+                res.send({
+                    msg: " create error",
+                    code: 400,
+                    status: "failed"
+                })
+            }
         }
 
     } catch {
-        log.error(`your data creating err:${err}`);
+        log.error(`your upData creating err:${err}`);
         res.send({
-            msg: "Error in creating data",
+            msg: "Error in creating upData",
             status: "failed",
             code: 400
         })
@@ -43,7 +66,7 @@ const deleteFromCart = async (req, res) => {
         const { _id } = req.params;
 
         //console.log(`${_id}`)
-        
+
         const result = await cartModal.findOne({ _id });
         if (result) {
             const deleteData = await cartModal.deleteOne({ _id: result._id });
@@ -74,6 +97,6 @@ const deleteFromCart = async (req, res) => {
 }
 
 module.exports = {
-    cartCreate,
+    cartUpData,
     deleteFromCart
 }
