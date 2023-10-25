@@ -5,6 +5,7 @@ const { cartValPost } = require("../validation/cart.validation");
 const route = require("express").Router();
 
 route.put("/cart", [jwtToken, cartValPost], cartController.cartUpData);
-route.delete("/delete/:_id", cartController.deleteFromCart)
+route.put("/remove", [jwtToken], cartController.removeFromCart);
+route.delete("/delete/:_id", [jwtToken], cartController.deleteFromCart);
 
 module.exports = route;

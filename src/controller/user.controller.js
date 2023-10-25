@@ -105,9 +105,45 @@ const postFindLogin = async (req, res) => {
     }
 }
 
+const findPage = async (req, res) => {
+    try {
+        const { page, perPage } = req.query;
+        const skip = (page - 1) * perPage;
+        const result = await userModal.find().limit(perPage).skip(skip).sort({
+            "createdAt": -1,
+            "srno": -1
+        });
+        const count = await userModal.count();
+        if (result) {
+            res.send({
+                status: "success",
+                code: 200,
+                count: count,
+                data: result
+            })
+        } else {
+            res.send({
+                msg: "Error in finding user",
+                status: "failed",
+                code: 400,
+            })
+        }
+
+    } catch {
+        log.error(`your data creating err:${err}`);
+        res.send({
+            msg: "Error in data creating ",
+            status: "failed",
+            code: 401
+        })
+
+    }
+}
+
 
 module.exports = {
     postRegistration,
     postLogin,
-    postFindLogin
+    postFindLogin,
+    findPage
 }
