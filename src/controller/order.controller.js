@@ -51,7 +51,7 @@ const getById = async (req, res) => {
                     as: "orderData"
                 },
             },
-            
+
             {
                 $match: { _id: new mongoose.Types.ObjectId(_id) }
             }
@@ -81,8 +81,42 @@ const getById = async (req, res) => {
         })
     }
 }
+
+const getByFind = async (req, res) => {
+    try {
+        const { status } = req.query;
+        const result = await orderModal.find({status:status});
+        if (result) {
+            res.send({
+                status: "success",
+                code: 200,
+                data: result
+            })
+        } else {
+            res.send({
+                msg: "Error in finding user",
+                status: "failed",
+                code: 400,
+            })
+        }
+
+    } catch (err){
+        log.error(`your data creating err:${err}`);
+        res.send({
+            msg: "Error in data creating ",
+            status: "failed",
+            code: 401
+        })
+
+    }
+
+
+}
+
 module.exports = {
     postCreate,
-    getById
+    getById,
+    getByFind
+
 }
 

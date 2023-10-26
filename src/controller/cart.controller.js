@@ -61,9 +61,7 @@ const cartUpData = async (req, res) => {
 
     }
 }
-
-
-removeFromCart = async (req, res) => {
+const removeFromCart = async (req, res) => {
     try {
         const { userId, productId } = req.body;
         const data = await cartModal.findOne({
@@ -119,7 +117,6 @@ removeFromCart = async (req, res) => {
         });
     }
 }
-
 const deleteFromCart = async (req, res) => {
     try {
         const { _id } = req.params;
