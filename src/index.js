@@ -4,6 +4,9 @@ app.use(express.json());
 const logger = require("./util/logging");
 const log = logger(new Date() + "index.js");
 
+const dotenv=require("dotenv");
+dotenv.config();
+
 const route = require("./route/index");
 app.use(route.userRoute);
 app.use(route.productRoute);
@@ -15,7 +18,7 @@ app.use(route.orderRoute);
 
 const db = require("./config/database");
 
-const PORT = 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
     log.info(`Server is Run on ${PORT}`);
     db.dbConnection();
